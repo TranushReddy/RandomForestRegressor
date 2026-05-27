@@ -24,11 +24,6 @@ if uploaded_file is not None:
     st.subheader("Dataset Preview")
     st.dataframe(df.head())
 
-    # ---------------- COLUMN SELECTION ----------------
-    st.subheader("Select Target Column")
-
-    target_column = st.selectbox("Choose the target column", df.columns)
-
     st.subheader("Correlation Heatmap")
     st.write("Visualize the correlation between features and the target variable.")
     st.pyplot(sns.heatmap(df.corr(), annot=True, cmap="coolwarm", linewidths=0.5))
@@ -36,6 +31,10 @@ if uploaded_file is not None:
     st.subheader("Pairplot")
     st.write("Visualize the relationship between features.")
     st.pyplot(sns.pairplot(df))
+    # ---------------- COLUMN SELECTION ----------------
+    st.subheader("Select Target Column")
+
+    target_column = st.selectbox("Choose the target column", df.columns)
 
     # Features and Target
     X = df.drop(columns=[target_column])
