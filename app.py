@@ -29,6 +29,14 @@ if uploaded_file is not None:
 
     target_column = st.selectbox("Choose the target column", df.columns)
 
+    st.subheader("Correlation Heatmap")
+    st.write("Visualize the correlation between features and the target variable.")
+    st.pyplot(sns.heatmap(df.corr(), annot=True, cmap="coolwarm", linewidths=0.5))
+
+    st.subheader("Pairplot")
+    st.write("Visualize the relationship between features.")
+    st.pyplot(sns.pairplot(df))
+
     # Features and Target
     X = df.drop(columns=[target_column])
     y = df[target_column]
@@ -44,14 +52,6 @@ if uploaded_file is not None:
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=42
     )
-
-    st.subheader("Correlation Heatmap")
-    st.write("Visualize the correlation between features and the target variable.")
-    st.pyplot(sns.heatmap(df.corr(), annot=True, cmap="coolwarm", linewidths=0.5))
-
-    st.subheader("Pairplot")
-    st.write("Visualize the relationship between features.")
-    st.pyplot(sns.pairplot(df))
 
     # ---------------- SCALING ----------------
     scaler = StandardScaler()
