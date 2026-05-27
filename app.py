@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
@@ -26,11 +27,17 @@ if uploaded_file is not None:
 
     st.subheader("Correlation Heatmap")
     st.write("Visualize the correlation between features and the target variable.")
-    st.pyplot(sns.heatmap(df.corr(), annot=True, cmap="coolwarm", linewidths=0.5))
+    fig_corr, ax_corr = plt.subplots()
+    numeric_df = df.select_dtypes(include=[np.number])
+    sns.heatmap(
+        numeric_df.corr(), annot=True, cmap="coolwarm", linewidths=0.5, ax=ax_corr
+    )
+    st.pyplot(fig_corr)
 
     st.subheader("Pairplot")
     st.write("Visualize the relationship between features.")
-    st.pyplot(sns.pairplot(df))
+    fig_pair = sns.pairplot(df)
+    st.pyplot(fig_pair.figure)
     # ---------------- COLUMN SELECTION ----------------
     st.subheader("Select Target Column")
 
